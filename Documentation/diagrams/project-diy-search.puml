@@ -1,0 +1,134 @@
+@startuml
+
+title Project DIY Search
+
+box 
+    participant consumer
+end box
+box Services
+    participant diyService
+    database diyDB
+end box
+
+' 1. Call to search for Handymen can add filters or return all people listed
+
+consumer -> diyService: GET v1/handy-people
+activate diyService
+    note right #Yellow
+        ==**Request Params**==
+            String name
+            List<Enums> serviceType
+            List<Enums> area
+    end note 
+'  1.1 name: would be the name of the handy person or company(if we even list companies)
+'  1.2 serviceType: we will provide a list of services ()
+
+' 2. search by different criteria 
+opt param == name
+    diyService -> diyDB: searchHandyPeople()
+    activate diyDB
+        note right #Aqua
+            ==**SQL**==
+                SELECT hp.FirstName, hp.LastName, hp.Gender, 
+                cd.PhoneNumber, cd.Email, l.Location, s.ServiceType, 
+                s.Specialties, s.CallOutFee FROM HandyPeople hp 
+                JOIN ContactDetails cd on hp.ID = cd.HandyPeopleID 
+                JOIN Location l on hp.ID = l.HandyPeopleID JOIN 
+                Services s on hp.ID = s.HandyPeopleID
+            ==**PARAMS**==
+                name
+        end note
+    diyDB -> diyService: results
+    deactivate diyDB
+
+    else param == serviceType
+        diyService -> diyDB: searchHandyPeople()
+        activate diyDB
+            note right #Aqua
+                ==**SQL**==
+                    SELECT hp.FirstName, hp.LastName, hp.Gender, cd.PhoneNumber, 
+                    cd.Email, l.Location, s.ServiceType, s.Specialties, s.CallOutFee 
+                    FROM HandyPeople hp JOIN ContactDetails cd on hp.ID = cd.HandyPeopleID 
+                    JOIN Location l on hp.ID = l.HandyPeopleID JOIN Services s on 
+                    hp.ID = s.HandyPeopleID WHERE serviceType = ? 
+                    
+                    OR
+
+                    SELECT hp.FirstName, hp.LastName, hp.Gender, cd.PhoneNumber, 
+                    cd.Email, l.Location, s.ServiceType, s.Specialties, s.CallOutFee 
+                    FROM HandyPeople hp JOIN ContactDetails cd on hp.ID = cd.HandyPeopleID 
+                    JOIN Location l on hp.ID = l.HandyPeopleID JOIN Services s on 
+                    hp.ID = s.HandyPeopleID WHERE serviceType IN (?, ?, ?) 
+                ==**PARAMS**==
+                    serviceType
+            end note
+        diyDB -> diyService: results
+        deactivate diyDB
+
+    else param == area
+        diyService -> diyDB: searchHandyPeople()
+        activate diyDB
+            note right #Aqua
+                ==**SQL**==
+                    SELECT hp.FirstName, hp.LastName, hp.Gender, cd.PhoneNumber, 
+                    cd.Email, l.Location, s.ServiceType, s.Specialties, s.CallOutFee 
+                    FROM HandyPeople hp JOIN ContactDetails cd on hp.ID = cd.HandyPeopleID 
+                    JOIN Location l on hp.ID = l.HandyPeopleID JOIN Services s on 
+                    hp.ID = s.HandyPeopleID WHERE area = ?
+                    
+                    OR
+
+                    SELECT hp.FirstName, hp.LastName, hp.Gender, cd.PhoneNumber, 
+                    cd.Email, l.Location, s.ServiceType, s.Specialties, s.CallOutFee 
+                    FROM HandyPeople hp JOIN ContactDetails cd on hp.ID = cd.HandyPeopleID 
+                    JOIN Location l on hp.ID = l.HandyPeopleID JOIN Services s on 
+                    hp.ID = s.HandyPeopleID WHERE area IN (?, ?, ?)
+                ==**PARAMS**==
+                    area
+            end note
+        diyDB -> diyService: results
+        deactivate diyDB
+
+    else
+        diyService -> diyDB: searchHandyPeople()
+        activate diyDB
+            note right #Aqua
+                ==**SQL**==
+                    SELECT hp.FirstName, hp.LastName, hp.Gender, cd.PhoneNumber, 
+                    cd.Email, l.Location, s.ServiceType, s.Specialties, s.CallOutFee 
+                    FROM HandyPeople hp JOIN ContactDetails cd on hp.ID = cd.HandyPeopleID 
+                    JOIN Location l on hp.ID = l.HandyPeopleID JOIN Services s on 
+                    hp.ID = s.HandyPeopleID
+            end note
+        diyDB -> diyService: results
+        deactivate diyDB            
+
+end opt
+
+diyService -> diyService: mapToResponseList
+    note right #LightBlue
+        ==**Handy People:**==
+            name
+            email
+            phoneNumber
+            service
+            area
+            callOutFee
+            description
+    end note
+
+alt #pink Unhandled exception
+    consumer <<-- diyService: 500 Internal Server Error
+    note right
+        **messages**: ERROR : Unknown Error Occurred
+    end note
+else #pink Handy People not found
+    consumer <<-- diyService: 404 Not Found
+    note right
+        **messages**: ERROR : Handy People not found
+    end note
+else #lightgreen
+    consumer <<- diyService: 200 OK
+end alt
+
+@enduml
