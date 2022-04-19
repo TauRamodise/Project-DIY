@@ -2,8 +2,8 @@
 {
     public class User
     {
-        public string firstname { get; set; }
-        public string surname { get; set; }
+        public string? firstname { get; set; }
+        public string? surname { get; set; }
 
 
         public User()
