@@ -16,41 +16,44 @@ namespace Diy_Project.Controllers
     {
         private readonly DiyContext _context;
 
-        public ContractsController(DiyContext context)
-        {
-            _context = context;
-        }
+        public ContractsController(DiyContext context) => _context = context;
 
-        // GET: api/Contracts
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Contract>>> GetContracts()
+        // GET: api/Contracts //NOT NEEDED: NO ADMIN USER
+         [HttpGet]
+         public async Task<ActionResult<IEnumerable<Contract>>> GetContracts()
+            => await _context.Contracts.ToListAsync();
+
+        // GET: api/Contracts/customer/5
+        [HttpGet("customer/{id}")]
+        public async Task<IEnumerable<Contract>> GetCustomerContractsById(int id)
+            => await _context.Contracts.Where(contract => contract.CustomerID == id).ToListAsync();
+
+        // GET: api/Contracts/provider/5
+        [HttpGet("provider/{id}")]
+        public async Task<IEnumerable<Contract>> GetProviderContractsById(int id)
         {
-            return await _context.Contracts.ToListAsync();
+            return await _context.Contracts.Where(contract => contract.ProviderID == id).ToListAsync();
         }
 
         // GET: api/Contracts/5
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(Contract), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Contract>> GetContract(int id)
         {
             var contract = await _context.Contracts.FindAsync(id);
 
-            if (contract == null)
-            {
-                return NotFound();
-            }
-
-            return contract;
+            return contract == null ? NotFound() : Ok(contract);
         }
 
         // PUT: api/Contracts/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> PutContract(int id, Contract contract)
         {
-            if (id != contract.ID)
-            {
-                return BadRequest();
-            }
+            if (id != contract.ID) return BadRequest();
 
             _context.Entry(contract).State = EntityState.Modified;
 
@@ -73,31 +76,15 @@ namespace Diy_Project.Controllers
             return NoContent();
         }
 
-        // POST: api/Contracts
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        // POST: api/Contract
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<ActionResult<Contract>> PostContract(Contract contract)
         {
             _context.Contracts.Add(contract);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetContract", new { id = contract.ID }, contract);
-        }
-
-        // DELETE: api/Contracts/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteContract(int id)
-        {
-            var contract = await _context.Contracts.FindAsync(id);
-            if (contract == null)
-            {
-                return NotFound();
-            }
-
-            _context.Contracts.Remove(contract);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
         }
 
         private bool ContractExists(int id)

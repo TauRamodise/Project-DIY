@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\data\\sandbox\\project_diy\\Project-DIY\\Diy-Project\\Diy-Project.csproj": {}
+    "C:\\Users\\Unathi\\Documents\\Level Up\\C# Fundamentals\\Project-DIY\\Diy-Project\\Diy-Project.csproj": {}
   },
   "projects": {
-    "C:\\data\\sandbox\\project_diy\\Project-DIY\\Diy-Project\\Diy-Project.csproj": {
+    "C:\\Users\\Unathi\\Documents\\Level Up\\C# Fundamentals\\Project-DIY\\Diy-Project\\Diy-Project.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\data\\sandbox\\project_diy\\Project-DIY\\Diy-Project\\Diy-Project.csproj",
+        "projectUniqueName": "C:\\Users\\Unathi\\Documents\\Level Up\\C# Fundamentals\\Project-DIY\\Diy-Project\\Diy-Project.csproj",
         "projectName": "Diy-Project",
-        "projectPath": "C:\\data\\sandbox\\project_diy\\Project-DIY\\Diy-Project\\Diy-Project.csproj",
-        "packagesPath": "C:\\Users\\bbdnet2510\\.nuget\\packages\\",
-        "outputPath": "C:\\data\\sandbox\\project_diy\\Project-DIY\\Diy-Project\\obj\\",
+        "projectPath": "C:\\Users\\Unathi\\Documents\\Level Up\\C# Fundamentals\\Project-DIY\\Diy-Project\\Diy-Project.csproj",
+        "packagesPath": "C:\\Users\\Unathi\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Unathi\\Documents\\Level Up\\C# Fundamentals\\Project-DIY\\Diy-Project\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\bbdnet2510\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Unathi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -81,7 +85,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }
