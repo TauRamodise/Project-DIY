@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Diy_Project.Models
+﻿namespace Diy_Project.Models
 {
-    public partial class Contract
+    public class Contract
     {
         public Contract(int iD, int customerID, int providerID, int serviceID, string description, DateTime startDate, DateTime endDate, int amount, bool isCountered, int status, DateTime created, DateTime modified)
         {

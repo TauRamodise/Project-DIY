@@ -6,20 +6,17 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Diy_Project.Models
 {
-    public partial class DiyContext : DbContext
+    public class DiyContext : DbContext
     {
-        public DiyContext()
-        {
-        }
 
         public DiyContext(DbContextOptions<DiyContext> options)
             : base(options)
         {
         }
 
-        public virtual DbSet<ContactDetail> ContactDetails { get; set; }
-        public virtual DbSet<Contract> Contracts { get; set; }
-        public virtual DbSet<Service> Services { get; set; }
-        public virtual DbSet<User> Users { get; set; }
+        public DbSet<ContactDetail> ContactDetails { get; set; }
+        public DbSet<Contract> Contracts { get; set; }
+        public DbSet<Service> Services { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }

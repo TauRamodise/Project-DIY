@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Diy_Project.Models
 {
-    public partial class ContactDetail
+    public class ContactDetail
     {
         public ContactDetail(int iD, string phoneNumber, string email, string telephone, string afterHours, int userID)
         {
