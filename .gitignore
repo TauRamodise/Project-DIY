@@ -1,0 +1,6 @@
+.vs
+Diy-Project/.vs
+Diy-Project/obj/*
+Diy-Project/bin
+Diy-Project/obj/Debug/net6.0/Diy-Project.assets.cache
+Diy-Project/obj/Debug/net6.0/Diy-Project.GeneratedMSBuildEditorConfig.editorconfig
