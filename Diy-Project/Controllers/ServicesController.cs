@@ -12,47 +12,47 @@ namespace Diy_Project.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class ServicesController : ControllerBase
     {
         private readonly DiyContext _context;
 
-        public UsersController(DiyContext context)
+        public ServicesController(DiyContext context)
         {
             _context = context;
         }
 
-        // GET: api/Users
+        // GET: api/Services
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<Service>>> GetServices()
         {
-            return await _context.Users.ToListAsync();
+            return await _context.Services.ToListAsync();
         }
 
-        // GET: api/Users/5
+        // GET: api/Services/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        public async Task<ActionResult<Service>> GetService(int id)
         {
-            var user = await _context.Users.FindAsync(id);
+            var service = await _context.Services.FindAsync(id);
 
-            if (user == null)
+            if (service == null)
             {
                 return NotFound();
             }
 
-            return user;
+            return service;
         }
 
-        // PUT: api/Users/5
+        // PUT: api/Services/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User user)
+        public async Task<IActionResult> PutService(int id, Service service)
         {
-            if (id != user.ID)
+            if (id != service.ID)
             {
                 return BadRequest();
             }
 
-            _context.Entry(user).State = EntityState.Modified;
+            _context.Entry(service).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace Diy_Project.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserExists(id))
+                if (!ServiceExists(id))
                 {
                     return NotFound();
                 }
@@ -73,36 +73,36 @@ namespace Diy_Project.Controllers
             return NoContent();
         }
 
-        // POST: api/Users
+        // POST: api/Services
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        public async Task<ActionResult<Service>> PostService(Service service)
         {
-            _context.Users.Add(user);
+            _context.Services.Add(service);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetUser), new { id = user.ID }, user);
+            return CreatedAtAction("GetService", new { id = service.ID }, service);
         }
 
-        // DELETE: api/Users/5
+        // DELETE: api/Services/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
+        public async Task<IActionResult> DeleteService(int id)
         {
-            var user = await _context.Users.FindAsync(id);
-            if (user == null)
+            var service = await _context.Services.FindAsync(id);
+            if (service == null)
             {
                 return NotFound();
             }
 
-            _context.Users.Remove(user);
+            _context.Services.Remove(service);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool UserExists(int id)
+        private bool ServiceExists(int id)
         {
-            return _context.Users.Any(e => e.ID == id);
+            return _context.Services.Any(e => e.ID == id);
         }
     }
 }

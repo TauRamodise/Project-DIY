@@ -12,47 +12,47 @@ namespace Diy_Project.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class ContactDetailsController : ControllerBase
     {
         private readonly DiyContext _context;
 
-        public UsersController(DiyContext context)
+        public ContactDetailsController(DiyContext context)
         {
             _context = context;
         }
 
-        // GET: api/Users
+        // GET: api/ContactDetails
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<ContactDetail>>> GetContactDetails()
         {
-            return await _context.Users.ToListAsync();
+            return await _context.ContactDetails.ToListAsync();
         }
 
-        // GET: api/Users/5
+        // GET: api/ContactDetails/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        public async Task<ActionResult<ContactDetail>> GetContactDetail(int id)
         {
-            var user = await _context.Users.FindAsync(id);
+            var contactDetail = await _context.ContactDetails.FindAsync(id);
 
-            if (user == null)
+            if (contactDetail == null)
             {
                 return NotFound();
             }
 
-            return user;
+            return contactDetail;
         }
 
-        // PUT: api/Users/5
+        // PUT: api/ContactDetails/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User user)
+        public async Task<IActionResult> PutContactDetail(int id, ContactDetail contactDetail)
         {
-            if (id != user.ID)
+            if (id != contactDetail.ID)
             {
                 return BadRequest();
             }
 
-            _context.Entry(user).State = EntityState.Modified;
+            _context.Entry(contactDetail).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace Diy_Project.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserExists(id))
+                if (!ContactDetailExists(id))
                 {
                     return NotFound();
                 }
@@ -73,36 +73,36 @@ namespace Diy_Project.Controllers
             return NoContent();
         }
 
-        // POST: api/Users
+        // POST: api/ContactDetails
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        public async Task<ActionResult<ContactDetail>> PostContactDetail(ContactDetail contactDetail)
         {
-            _context.Users.Add(user);
+            _context.ContactDetails.Add(contactDetail);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetUser), new { id = user.ID }, user);
+            return CreatedAtAction("GetContactDetail", new { id = contactDetail.ID }, contactDetail);
         }
 
-        // DELETE: api/Users/5
+        // DELETE: api/ContactDetails/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
+        public async Task<IActionResult> DeleteContactDetail(int id)
         {
-            var user = await _context.Users.FindAsync(id);
-            if (user == null)
+            var contactDetail = await _context.ContactDetails.FindAsync(id);
+            if (contactDetail == null)
             {
                 return NotFound();
             }
 
-            _context.Users.Remove(user);
+            _context.ContactDetails.Remove(contactDetail);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool UserExists(int id)
+        private bool ContactDetailExists(int id)
         {
-            return _context.Users.Any(e => e.ID == id);
+            return _context.ContactDetails.Any(e => e.ID == id);
         }
     }
 }
