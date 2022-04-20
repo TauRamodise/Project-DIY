@@ -42,6 +42,22 @@ namespace Diy_Project.Controllers
             return service;
         }
 
+        [HttpGet("GetByUserID/{id}")]
+        public async Task<ActionResult<IEnumerable<Service>>> GetServicesByUserID(int id)
+        {
+            var services = _context.Services.Where(service => service.UserID == id);
+
+
+            if (services == null)
+            {
+                return NotFound();
+            }
+
+
+
+            return await services.ToListAsync();
+        }
+
         // PUT: api/Services/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

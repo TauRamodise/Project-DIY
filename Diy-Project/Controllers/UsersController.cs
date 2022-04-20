@@ -29,7 +29,7 @@ namespace Diy_Project.Controllers
         }
 
         // GET: api/Users/5
-        [HttpGet("{id}")]
+        [HttpGet("GetById/{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
             var user = await _context.Users.FindAsync(id);
@@ -41,6 +41,40 @@ namespace Diy_Project.Controllers
 
             return user;
         }
+
+        [HttpGet("GetByFirstName/{firstName}")]
+        public async Task<ActionResult<IEnumerable<User>>> GetUsersByFirstName(string firstName)
+        {
+            var users = _context.Users.Where(user => user.FirstName!.Contains(firstName));
+
+
+            if (users == null)
+            {
+                return NotFound();
+            }
+
+
+
+            return await users.ToListAsync();
+        }
+
+
+        [HttpGet("GetBySurname/{surname}")]
+        public async Task<ActionResult<IEnumerable<User>>> GetUsersBysurname(string surname)
+        {
+            var users = _context.Users.Where(user => user.Surname!.Contains(surname));
+
+
+            if (users == null)
+            {
+                return NotFound();
+            }
+
+
+
+            return await users.ToListAsync();
+        }
+
 
         // PUT: api/Users/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
