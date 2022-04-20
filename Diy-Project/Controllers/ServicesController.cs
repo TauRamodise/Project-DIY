@@ -47,13 +47,24 @@ namespace Diy_Project.Controllers
         {
             var services = _context.Services.Where(service => service.UserID == id);
 
-
             if (services == null)
             {
                 return NotFound();
             }
 
+            return await services.ToListAsync();
+        }
 
+
+        [HttpGet("GetServicesOnType/{type}")]
+        public async Task<ActionResult<IEnumerable<Service>>> GetServicesOnType(string type)
+        {
+            var services = _context.Services.Where(service => service.ServiceType.ToLower().Contains(type.ToLower()));
+
+            if (services == null)
+            {
+                return NotFound();
+            }
 
             return await services.ToListAsync();
         }
