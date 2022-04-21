@@ -7,7 +7,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Diy_Project.Models;
-
+using MailKit;
+using MimeKit;
+using Diy_Project.Services;
 namespace Diy_Project.Controllers
 {
     [Route("api/[controller]")]
@@ -32,6 +34,13 @@ namespace Diy_Project.Controllers
         [HttpGet("GetById/{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
+            MimeMessage message = new BuildEmail()
+                .From().To("diyprojectcsharp@gmail.com")
+                .MailContents(EmailType.NewUser)
+                .Build();
+            EmailService emailService = new EmailService();
+            emailService.SendEmail(message);
+
             var user = await _context.Users.FindAsync(id);
 
             if (user == null)
