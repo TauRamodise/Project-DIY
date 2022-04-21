@@ -1,0 +1,5 @@
+﻿SET IDENTITY_INSERT [dbo].[Contracts] ON
+INSERT INTO [dbo].[Contracts] ([ID], [CustomerID], [ProviderID], [ServiceID], [Description], [StartDate], [EndDate], [Amount], [IsCountered], [Status], [Created], [Modified]) VALUES (2, 4, 4, 2, N'Destroy the land of water', N'2022-04-20 13:51:54', N'2022-04-20 13:51:54', 50000, 0, 0, N'2022-04-20 13:51:54', N'2022-04-20 13:51:54')
+INSERT INTO [dbo].[Contracts] ([ID], [CustomerID], [ProviderID], [ServiceID], [Description], [StartDate], [EndDate], [Amount], [IsCountered], [Status], [Created], [Modified]) VALUES (5, 3, 6, 2, N'Reroof the pool house due to leaks', N'2022-05-20 13:51:54', N'2022-05-20 13:51:54', 15000, 0, 0, N'2022-04-20 13:51:54', N'2022-04-20 13:51:54')
+INSERT INTO [dbo].[Contracts] ([ID], [CustomerID], [ProviderID], [ServiceID], [Description], [StartDate], [EndDate], [Amount], [IsCountered], [Status], [Created], [Modified]) VALUES (7, 5, 5, 2, N'Build a world class back yard for a weding venue', N'2022-04-20 13:51:54', N'2022-04-30 13:51:54', 2600, 0, 0, N'2022-04-20 13:51:54', N'2022-04-20 13:51:54')
+SET IDENTITY_INSERT [dbo].[Contracts] OFF

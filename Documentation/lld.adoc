@@ -1,0 +1,9 @@
+:imagesdir: .\images\
+
+= Project DIY 
+
+=== Search for Handy People
+
+    GET v1/handy-people
+
+image::project-diy-search.png[]

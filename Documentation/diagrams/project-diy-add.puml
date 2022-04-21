@@ -1,0 +1,81 @@
+@startuml
+
+title Project DIY Add New HandyPerson
+
+box 
+    participant consumer
+end box
+box Services
+    participant diyService
+    database diyDB
+end box
+
+' 1. Call to add Handymen can add
+
+consumer -> diyService: POST v1/handy-people
+activate diyService
+    note right #Yellow
+        ==**Request Body**==
+        * name
+        * surname
+        * gender
+        * email
+        * phoneNumber
+        * service
+        * specialties
+        * location
+        * callOutFee
+        * description
+    end note 
+
+' 2. insert new handy person
+
+    diyService -> diyDB: BEGIN TRANSACTION
+    activate diyDB
+        note right #Aqua
+            ==**SQL**==
+                EXECUTE HandyPerson_save
+                @FirstName = ?,
+                @Surname = ?,
+                @Gender = ?,
+                @Email = ?,
+                @PhoneNumber = ?,
+                @Service = ?,
+                @Specialities = ?,
+                @Location = ?,
+                @CallOutFee = ?,
+                @Description = ?
+            ==**PARAMS**==
+                name
+                surname
+                gender
+                email
+                phoneNumber
+                service
+                specialties
+                location
+                callOutFee
+                description
+        end note
+    diyDB -> diyService: END TRANSACTION
+    deactivate diyDB
+
+
+diyService -> diyService: mapToResponse
+
+
+alt #pink Unhandled exception
+    consumer <<-- diyService: 500 Internal Server Error
+    note right
+        **messages**: ERROR : Unknown Error Occurred
+    end note
+else #pink Empty param
+    consumer <<-- diyService: 400 Bad Request
+    note right
+        **messages**: ERROR : Param is missing
+    end note
+else #lightgreen
+    consumer <- diyService: 201 Created
+end alt
+
+@enduml
